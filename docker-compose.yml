@@ -1,0 +1,59 @@
+version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - DB_ENG=${DB_ENG}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER:-test_user}
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-test_db}
+      - MYSQL_USER=${DB_USER:-test_user}
+      - MYSQL_PASSWORD=${DB_PASS:-test_pass}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS:-super_secret_pass}
+    ports:
+      - "9906:3306"
+    profiles:
+      - mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      - PMA_HOST=${DB_ENG}
+      - MYSQL_DATABASE=${DB_NAME:-test_db}
+      - MYSQL_USER=${DB_USER:-test_user}
+      - MYSQL_PASSWORD=${DB_PASS:-test_pass}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS:-super_secret_pass}
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    profiles:
+      - mysql
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      - POSTGRES_DB=${DB_NAME:-test_db}
+      - POSTGRES_USER=${DB_USER:-test_user}
+      - POSTGRES_PASSWORD=${DB_PASS:-test_pass}
+    ports:
+      - "5433:5432"
+    profiles:
+      - postgres
+      - postgresql
+
+  pgadmin:
+    image: 'thajeztah/pgadmin4'
+    ports:
+      - "8081:5050"
+    depends_on:
+      - postgres
+    profiles:
+      - postgres
+      - postgresql

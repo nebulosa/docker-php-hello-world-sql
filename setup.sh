@@ -20,9 +20,9 @@ case ${1} in
         ;;
 esac
 
-if [ $# -gt 2 ] && [ -f ${2} ]; then
+if [ $# -eq 2 ] && [ -f ${2} ]; then
+    # export all variables in env file
     set -o allexport
-    echo $2
     . "$(dirname ${2})/$(basename ${2})"
     set +o allexport
 elif [ ! -z ${2} ]; then

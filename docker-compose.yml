@@ -19,12 +19,12 @@ services:
     volumes:
       - ./app/bd/heel.sql:/docker-entrypoint-initdb.d/heel.sql
     ports:
-      - "9906:3306"
+      - "3306:3306"
     profiles:
       - mysql
 
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:5.1.1-apache
     environment:
       - PMA_HOST=${DB_ENG}
       - MYSQL_DATABASE=${DB_NAME:-test_db}
@@ -45,7 +45,7 @@ services:
       - POSTGRES_USER=${DB_USER:-test_user}
       - POSTGRES_PASSWORD=${DB_PASS:-test_pass}
     ports:
-      - "5433:5432"
+      - "5432:5432"
     profiles:
       - postgres
       - postgresql

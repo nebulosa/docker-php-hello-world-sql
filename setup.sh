@@ -21,6 +21,7 @@ case ${1} in
 esac
 
 if [ $# -eq 2 ] && [ -f ${2} ]; then
+    # export all variables in env file
     set -o allexport
     . "$(dirname ${2})/$(basename ${2})"
     set +o allexport

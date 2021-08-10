@@ -1,7 +1,6 @@
 #!/bin/sh
 CURRENT_DIR="$(cd "$(dirname "${0}")" && pwd)"
 
-# set -x
 
 cd "${CURRENT_DIR}"
 SECS="3"
@@ -21,8 +20,9 @@ case ${1} in
         ;;
 esac
 
-if [ -f ${2} ]; then
+if [ $# -gt 2 ] && [ -f ${2} ]; then
     set -o allexport
+    echo $2
     . "$(dirname ${2})/$(basename ${2})"
     set +o allexport
 elif [ ! -z ${2} ]; then

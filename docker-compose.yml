@@ -16,6 +16,8 @@ services:
       - MYSQL_USER=${DB_USER:-test_user}
       - MYSQL_PASSWORD=${DB_PASS:-test_pass}
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS:-super_secret_pass}
+    volumes:
+      - ./app/bd/heel.sql:/docker-entrypoint-initdb.d/heel.sql
     ports:
       - "9906:3306"
     profiles:
